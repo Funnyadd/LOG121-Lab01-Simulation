@@ -17,7 +17,7 @@ public class PanneauPrincipal extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		// On ajoute à la position le delta x et y de la vitesse
+		// On ajoute Ã  la position le delta x et y de la vitesse
 		position.translate(vitesse.x, vitesse.y);
 		g.fillRect(position.x, position.y, taille, taille);
 	}
