@@ -5,25 +5,25 @@ import java.util.List;
 
 public class ProductionChain {
 
-    private List<Building> buildings;
+    private List<Building> buildingList;
     private List<Chemin> cheminList;
 
     public ProductionChain() {
-        this.buildings = new LinkedList<>();
+        this.buildingList = new LinkedList<>();
         this.cheminList = new LinkedList<>();
     }
 
     public ProductionChain(List<Building> buildings, List<Chemin> cheminList) {
-        this.buildings = buildings;
+        this.buildingList = buildings;
         this.cheminList = cheminList;
     }
 
-    public List<Building> getBuildings() {
-        return buildings;
+    public List<Building> getBuildingList() {
+        return buildingList;
     }
 
-    public void setBuildings(List<Building> buildings) {
-        this.buildings = buildings;
+    public void setBuildingList(List<Building> buildings) {
+        this.buildingList = buildings;
     }
 
     public List<Chemin> getCheminList() {

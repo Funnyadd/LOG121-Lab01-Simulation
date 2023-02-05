@@ -4,8 +4,8 @@ public class EntrepotInput extends Input {
 
     private String capacity;
 
-    public EntrepotInput(String material, String capacity) {
-        super(material);
+    public EntrepotInput(Component component, String capacity) {
+        super(component);
         this.capacity = capacity;
     }
 
@@ -15,5 +15,13 @@ public class EntrepotInput extends Input {
 
     public void setCapacity(String capacity) {
         this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return "EntrepotInput{" +
+                super.toString() +
+                ", capacity='" + capacity + '\'' +
+                '}';
     }
 }

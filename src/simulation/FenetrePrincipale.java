@@ -11,7 +11,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 
 	private static final long serialVersionUID = 1L;
 	private static final String TITRE_FENETRE = "Laboratoire 1 : LOG121 - Simulation";
-	private static final Dimension DIMENSION = new Dimension(700, 700);
+	public static final Dimension DIMENSION = new Dimension(700, 700);
 
 	public FenetrePrincipale() {
 		PanneauPrincipal panneauPrincipal = new PanneauPrincipal();
@@ -33,7 +33,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("TEST")) {
+		if (evt.getPropertyName().equals("REPAINT")) {
 			repaint();
 //			System.out.println(evt.getNewValue());
 		}

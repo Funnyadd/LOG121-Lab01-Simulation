@@ -1,6 +1,7 @@
 package util;
 
 import model.*;
+import model.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -24,7 +25,6 @@ public final class XmlParser {
     private static final String ID_ATTRIBUTE = "id";
 
     public static ProductionChain parseXml(String filePath) {
-
 
         List<Building> buildingList = new LinkedList<>();
         List<Chemin> cheminList = new LinkedList<>();
@@ -78,7 +78,6 @@ public final class XmlParser {
                                         parseInt(chemin.getAttributes().getNamedItem("vers").getNodeValue())));
                             }
                         }
-
                     }
                 }
             }
@@ -92,15 +91,15 @@ public final class XmlParser {
                     for (Building b : buildingList) {
                         if(buildingData.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue().equals(b.getType())) {
                             for (int j = 0; j < buildingData.getChildNodes().getLength(); j++) {
-                                Node component = buildingData.getChildNodes().item(j);
+                                Node configuration = buildingData.getChildNodes().item(j);
 
-                                if (component.getNodeType() == Node.ELEMENT_NODE) {
-                                    switch (component.getNodeName()) {
+                                if (configuration.getNodeType() == Node.ELEMENT_NODE) {
+                                    switch (configuration.getNodeName()) {
                                         case "icones":
                                             List<Icon> iconList = new LinkedList<>();
 
-                                            for (int k = 0; k < component.getChildNodes().getLength(); k++) {
-                                                Node stateIcon = component.getChildNodes().item(k);
+                                            for (int k = 0; k < configuration.getChildNodes().getLength(); k++) {
+                                                Node stateIcon = configuration.getChildNodes().item(k);
 
                                                 if (stateIcon.getNodeType() == Node.ELEMENT_NODE) {
                                                     String iconType = stateIcon.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
@@ -114,23 +113,24 @@ public final class XmlParser {
                                             break;
 
                                         case "entree":
-                                            String inputType = component.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
+                                            String inputType = configuration.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
+                                            Component component = new Component(inputType, b.getCoordinates());
 
                                             if (b.getType().equals(ENTREPOT_TYPE)) {
-                                                String inputCapacity = component.getAttributes().getNamedItem("capacite").getNodeValue();
-                                                inputList.add(new EntrepotInput(inputType, inputCapacity));
+                                                String inputCapacity = configuration.getAttributes().getNamedItem("capacite").getNodeValue();
+                                                inputList.add(new EntrepotInput(component, inputCapacity));
                                             } else {
-                                                String inputQuantity = component.getAttributes().getNamedItem("quantite").getNodeValue();
-                                                inputList.add(new UsineInput(inputType, inputQuantity));
+                                                String inputQuantity = configuration.getAttributes().getNamedItem("quantite").getNodeValue();
+                                                inputList.add(new UsineInput(component, inputQuantity));
                                             }
                                             break;
 
                                         case "sortie":
-                                            String outputType = component.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
+                                            String outputType = configuration.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
                                             b.setOutput(new Output(outputType));
                                             break;
                                         case "interval-production":
-                                            b.setProductionInterval(parseInt(component.getTextContent()));
+                                            b.setProductionInterval(parseInt(configuration.getTextContent()));
                                             break;
                                     }
                                     b.setInput(inputList);
@@ -140,7 +140,18 @@ public final class XmlParser {
                     }
                 }
             }
-            System.out.println("Xml file read successfully.");
+            System.out.println("Xml file read successfully.\nConfiguration:");
+
+            System.out.println("\nUsines:");
+            for (Building b : buildingList) {
+                System.out.println(b);
+            }
+
+            System.out.println("\nChemins:");
+            for (Chemin c : cheminList) {
+                System.out.println(c);
+            }
+
             return new ProductionChain(buildingList, cheminList);
 
         } catch (ParserConfigurationException | SAXException | IOException e) {

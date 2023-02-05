@@ -2,8 +2,6 @@ package simulation;
 
 import model.ProductionChain;
 
-import static util.XmlParser.parseXml;
-
 public class Simulation {
 
 	public static ProductionChain productionChain = new ProductionChain();
@@ -17,8 +15,8 @@ public class Simulation {
 		environnement.addPropertyChangeListener(fenetre);
 		environnement.execute();
 
-		// Temporary
-		productionChain = parseXml("src\\ressources\\configuration.xml");
+		// For testing purposes
+//		productionChain = parseXml("src\\ressources\\configuration.xml");
 	}
 
 }

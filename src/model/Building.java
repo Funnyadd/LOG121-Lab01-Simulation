@@ -89,4 +89,17 @@ public class Building {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "type='" + type + '\'' +
+                ", id=" + id +
+                ", productionInterval=" + productionInterval +
+                ", inputs=" + input +
+                ", " + output +
+                ", coordinates=[x:" + coordinates.x + ", y:" + coordinates.y + "]" +
+                ", icons=" + icon +
+                '}';
+    }
 }

@@ -2,17 +2,22 @@ package model;
 
 public class Input {
 
-    private String type;
+    private Component component;
 
-    public Input(String type) {
-        this.type = type;
+    public Input(Component component) {
+        this.component = component;
     }
 
-    public String getType() {
-        return type;
+    public Component getComponent() {
+        return component;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setComponent(Component component) {
+        this.component = component;
+    }
+
+    @Override
+    public String toString() {
+        return component.toString();
     }
 }

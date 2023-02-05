@@ -25,4 +25,12 @@ public class Icon {
     public void setPath(String path) {
         this.path = path;
     }
+
+    @Override
+    public String toString() {
+        return "Icon{" +
+                "type='" + type + '\'' +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }

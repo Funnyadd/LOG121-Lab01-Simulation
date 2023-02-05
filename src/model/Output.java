@@ -19,4 +19,9 @@ public class Output {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Output{type='" + type + "'}";
+    }
 }

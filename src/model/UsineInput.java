@@ -4,8 +4,8 @@ public class UsineInput extends Input {
 
         private String quantity;
 
-        public UsineInput(String material, String quantity) {
-                super(material);
+        public UsineInput(Component component, String quantity) {
+                super(component);
                 this.quantity = quantity;
         }
 
@@ -15,5 +15,13 @@ public class UsineInput extends Input {
 
         public void setQuantity(String quantity) {
                 this.quantity = quantity;
+        }
+
+        @Override
+        public String toString() {
+                return "UsineInput{" +
+                        super.toString() +
+                        ", quantity='" + quantity + '\'' +
+                        '}';
         }
 }

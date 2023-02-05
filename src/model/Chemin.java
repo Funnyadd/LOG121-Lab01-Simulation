@@ -25,4 +25,12 @@ public class Chemin {
     public void setTo(int to) {
         this.to = to;
     }
+
+    @Override
+    public String toString() {
+        return "Chemin{" +
+                "from=" + from +
+                ", to=" + to +
+                '}';
+    }
 }
