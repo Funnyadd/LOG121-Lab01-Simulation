@@ -1,10 +1,7 @@
 package simulation;
 
-import org.xml.sax.SAXException;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -13,7 +10,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import javax.xml.parsers.ParserConfigurationException;
 
 import static util.XmlParser.parseXml;
 
@@ -53,9 +49,8 @@ public class MenuFenetre extends JMenuBar {
 			int returnValue = fileChooser.showOpenDialog(null);
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
-				// TODO - Parser le fichier XML sélectionner
 				File selectedFile = fileChooser.getSelectedFile();
-				parseXml(selectedFile.getAbsolutePath());
+				Simulation.productionChain = parseXml(selectedFile.getAbsolutePath());
 			}
 		});
 		
@@ -67,7 +62,6 @@ public class MenuFenetre extends JMenuBar {
 		menuFichier.add(menuQuitter);
 
 		add(menuFichier);
-
 	}
 
 	/**

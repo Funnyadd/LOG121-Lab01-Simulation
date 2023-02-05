@@ -4,6 +4,10 @@ public class Output {
 
     private String type;
 
+    public Output() {
+        this.type = "";
+    }
+
     public Output(String type) {
         this.type = type;
     }

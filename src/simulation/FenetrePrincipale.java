@@ -28,6 +28,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 		setLocationRelativeTo(null);
 		// Empêcher la redimension de la fenêtre
 		setResizable(false);
+
 	}
 
 	@Override

@@ -1,9 +1,12 @@
 package simulation;
 
+import model.ProductionChain;
+
 import static util.XmlParser.parseXml;
 
 public class Simulation {
 
+	public static ProductionChain productionChain = new ProductionChain();
 	/**
 	 * Cette classe représente l'application dans son ensemble.
 	 */
@@ -15,7 +18,7 @@ public class Simulation {
 		environnement.execute();
 
 		// Temporary
-		parseXml("C:\\Users\\mihaj\\Desktop\\configuration.xml");
+		productionChain = parseXml("src\\ressources\\configuration.xml");
 	}
 
 }
