@@ -82,20 +82,17 @@ public final class XmlParser {
                             parseInt(module.getAttributes().getNamedItem("x").getNodeValue()),
                             parseInt(module.getAttributes().getNamedItem("y").getNodeValue()));
 
-                    if(module.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue().equals(ENTREPOT_TYPE)) {
-                        Entrepot entrepot = new Entrepot();
-                        entrepot.setId(parseInt(module.getAttributes().getNamedItem(ID_ATTRIBUTE).getNodeValue()));
-                        entrepot.setType(module.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue());
-                        entrepot.setCoordinates(coordinates);
+                    Building building = new Building();
+                    building.setId(parseInt(module.getAttributes().getNamedItem(ID_ATTRIBUTE).getNodeValue()));
+                    building.setType(module.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue());
+                    building.setCoordinates(coordinates);
 
+                    if(module.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue().equals(ENTREPOT_TYPE)) {
+                        Entrepot entrepot = new Entrepot(building);
                         buildingList.add(entrepot);
                     }
                     else {
-                        Usine usine = new Usine();
-                        usine.setId(parseInt(module.getAttributes().getNamedItem(ID_ATTRIBUTE).getNodeValue()));
-                        usine.setType(module.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue());
-                        usine.setCoordinates(coordinates);
-
+                        Usine usine = new Usine(building);
                         buildingList.add(usine);
                     }
                 } else {

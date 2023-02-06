@@ -1,7 +1,7 @@
 package model;
 
-public abstract class Observer {
+interface Observer {
 
-    public abstract void update();
+    void update();
 
 }

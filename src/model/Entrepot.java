@@ -1,10 +1,11 @@
 package model;
 
-public class Entrepot extends Building {
+public class Entrepot extends Building implements Observer {
 
     private Strategy strategy;
 
-    public Entrepot() {
+    public Entrepot(Building b) {
+        super(b.getType(), b.getIcon(), b.getInput(), b.getOutput(), b.getProductionInterval(), b.getCoordinates(), b.getId());
     }
 
     public Strategy getStrategy() {
@@ -18,5 +19,10 @@ public class Entrepot extends Building {
     @Override
     public String toString() {
         return "Entrepot" + super.toString();
+    }
+
+    @Override
+    public void update() {
+
     }
 }
