@@ -9,7 +9,7 @@ public class Component extends Icon {
 
     public Component(String type, Point initialPosition) {
         super(type, "");
-        super.setPath(getPath(type));
+        super.setPath(getPathFromType(type));
         this.position = initialPosition;
         this.speed = 1;
     }
@@ -40,7 +40,7 @@ public class Component extends Icon {
                 '}';
     }
 
-    private String getPath(String type) {
+    private String getPathFromType(String type) {
         final String METAL_PATH = "src\\ressources\\metal.png";
         final String AILE_PATH = "src\\ressources\\aile.png";
         final String MOTEUR_PATH = "src\\ressources\\moteur.png";
