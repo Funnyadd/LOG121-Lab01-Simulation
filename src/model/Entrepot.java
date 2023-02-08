@@ -1,6 +1,6 @@
 package model;
 
-public class Entrepot extends Building implements Observer {
+public class Entrepot extends Building implements Subject {
 
     private Strategy strategy;
 
@@ -19,10 +19,5 @@ public class Entrepot extends Building implements Observer {
     @Override
     public String toString() {
         return "Entrepot" + super.toString();
-    }
-
-    @Override
-    public void update() {
-
     }
 }
