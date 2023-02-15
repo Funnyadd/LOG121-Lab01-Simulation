@@ -2,11 +2,13 @@ package simulation;
 
 import model.Building;
 import model.Chemin;
+import model.MachineComponent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -17,6 +19,8 @@ import static simulation.Simulation.productionChain;
 public class PanneauPrincipal extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+
+	private static int matiereCounter = 0;
 
 	@Override
 	public void paint(Graphics g) {
@@ -49,21 +53,67 @@ public class PanneauPrincipal extends JPanel {
 			}
 
 			for (Building b : productionChain.getBuildingList()) {
-				BufferedImage image;
+				if (b.getType().equals("usine-matiere")) {
 
-				try {
-					image = ImageIO.read(new File(b.getIcon().get(0).getPath()));
-				} catch (IOException e) {
-					System.out.println("Error while reading one of the images");
-					throw new RuntimeException(e);
+					// Ajout d'une matiere
+					if (matiereCounter >= b.getProductionInterval()) matiereCounter = 0;
+					if (matiereCounter == 0) {
+						b.getOutput().addMachineComponents(new MachineComponent("metal", b.getCoordinates()));
+					}
+
+					var machineComponentList = b.getOutput().getMachineComponents();
+					var machineComponentsToRemove = new LinkedList<Integer>();
+
+					for (int i = 0; i < machineComponentList.size(); i++) {
+						MachineComponent m = machineComponentList.get(i);
+
+						// Draw components
+						g.drawImage(m.getImage(), m.getPosition().x - 15, m.getPosition().y - 15, this);
+
+						int xMultiplier = 1;
+						int yMultiplier = 1;
+
+						Chemin chemin = productionChain.getCheminByIdFrom(b.getId());
+						Building building = productionChain.getBuildingById(chemin.getTo());
+
+						if (building.getCoordinates().x - b.getCoordinates().x < 0) {
+							xMultiplier = -1;
+						}
+						else if (building.getCoordinates().x - b.getCoordinates().x == 0) {
+							xMultiplier = 0;
+						}
+
+						if (building.getCoordinates().y - b.getCoordinates().y < 0) {
+							yMultiplier = -1;
+						}
+						else if (building.getCoordinates().y - b.getCoordinates().y == 0) {
+							yMultiplier = 0;
+						}
+
+						// Chnage position of component
+						m.getPosition().translate(m.getSpeed() * xMultiplier, m.getSpeed() * yMultiplier);
+
+						// Check if component arrived at destination
+						if (m.getPosition().equals(productionChain.getBuildingById(chemin.getTo()).getCoordinates())) {
+							machineComponentsToRemove.add(i);
+						}
+					}
+
+					// Remove machineComponents that arrived at the next usine
+					for (int i : machineComponentsToRemove) {
+						machineComponentList.remove(i);
+					}
+					machineComponentsToRemove = new LinkedList<Integer>();
+
 				}
-				g.drawImage(image, b.getCoordinates().x - 15, b.getCoordinates().y - 15, this);
+			}
+			matiereCounter++;
+
+			for (Building b : productionChain.getBuildingList()) {
+				int imageInt = 0;
+				g.drawImage(b.getIcon().get(imageInt).getImage(), b.getCoordinates().x - 15, b.getCoordinates().y - 15, this);
 			}
 		}
-
-// On ajoute à la position le delta x et y de la vitesse
-//		position.translate(vitesse.x, vitesse.y);
-//		g.fillRect(position.x, position.y, taille, taille);
 	}
 
 	private int getYPostion(int offset) {

@@ -2,17 +2,17 @@ package model;
 
 public class Input {
 
-    private Component component;
+    private MachineComponent component;
 
-    public Input(Component component) {
+    public Input(MachineComponent component) {
         this.component = component;
     }
 
-    public Component getComponent() {
+    public MachineComponent getComponent() {
         return component;
     }
 
-    public void setComponent(Component component) {
+    public void setComponent(MachineComponent component) {
         this.component = component;
     }
 

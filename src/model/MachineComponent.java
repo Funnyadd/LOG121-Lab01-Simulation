@@ -2,15 +2,15 @@ package model;
 
 import java.awt.*;
 
-public class Component extends Icon {
+public class MachineComponent extends Icon {
 
     private int speed;
     private Point position;
 
-    public Component(String type, Point initialPosition) {
-        super(type, "");
+    public MachineComponent(String type, Point initialPosition) {
+        super(type);
         super.setPath(getPathFromType(type));
-        this.position = initialPosition;
+        this.position = new Point(initialPosition);
         this.speed = 1;
     }
 
@@ -32,7 +32,7 @@ public class Component extends Icon {
 
     @Override
     public String toString() {
-        return "Component{" +
+        return "MachineComponent{" +
                 "type='" + super.getType() + "'" +
                 ", path='" + super.getPath() + "'" +
                 ", speed=" + speed +

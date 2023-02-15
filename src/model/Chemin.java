@@ -10,6 +10,11 @@ public class Chemin {
         this.to = to;
     }
 
+    public Chemin() {
+        this.from = 0;
+        this.to = 0;
+    }
+
     public int getFrom() {
         return from;
     }

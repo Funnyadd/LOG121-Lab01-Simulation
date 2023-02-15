@@ -4,7 +4,7 @@ public class EntrepotInput extends Input {
 
     private String capacity;
 
-    public EntrepotInput(Component component, String capacity) {
+    public EntrepotInput(MachineComponent component, String capacity) {
         super(component);
         this.capacity = capacity;
     }

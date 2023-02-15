@@ -1,7 +1,7 @@
 package util;
 
 import model.*;
-import model.Component;
+import model.MachineComponent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -143,7 +143,7 @@ public final class XmlParser {
 
                                     case "entree":
                                         String inputType = configuration.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
-                                        Component component = new Component(inputType, b.getCoordinates());
+                                        MachineComponent component = new MachineComponent(inputType, b.getCoordinates());
 
                                         if (b.getType().equals(ENTREPOT_TYPE)) {
                                             String inputCapacity = configuration.getAttributes().getNamedItem("capacite").getNodeValue();

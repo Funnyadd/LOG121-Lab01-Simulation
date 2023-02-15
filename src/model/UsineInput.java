@@ -4,7 +4,7 @@ public class UsineInput extends Input {
 
         private String quantity;
 
-        public UsineInput(Component component, String quantity) {
+        public UsineInput(MachineComponent component, String quantity) {
                 super(component);
                 this.quantity = quantity;
         }

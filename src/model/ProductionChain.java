@@ -33,4 +33,18 @@ public class ProductionChain {
     public void setCheminList(List<Chemin> cheminList) {
         this.cheminList = cheminList;
     }
+
+    public Building getBuildingById(int id) {
+        for (Building b : buildingList) {
+            if (b.getId() == id) return b;
+        }
+        return new Building();
+    }
+
+    public Chemin getCheminByIdFrom(int id) {
+        for (Chemin c : cheminList) {
+            if (c.getFrom() == id) return c;
+        }
+        return new Chemin();
+    }
 }
