@@ -1,5 +1,6 @@
 package model;
 
 public interface Strategy {
-    int salesAlgorithm();
+    boolean salesAlgorithm();
+    String getIdentifier();
 }

@@ -1,14 +1,14 @@
 package model;
 
-public class RandomStrategy implements Strategy {
+public class DefaultStrategy implements Strategy {
 
     @Override
     public boolean salesAlgorithm() {
-        return (int) (Math.random() * 100) == 50;
+        return false;
     }
 
     @Override
     public String getIdentifier() {
-        return "aléatoire";
+        return "par défault";
     }
 }

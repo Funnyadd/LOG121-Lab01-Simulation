@@ -21,6 +21,7 @@ public class MenuFenetre extends JMenuBar {
 	private static final String MENU_FICHIER_QUITTER = "Quitter";
 	private static final String MENU_SIMULATION_TITRE = "Simulation";
 	private static final String MENU_SIMULATION_CHOISIR = "Choisir";
+	private static final String MENU_SIMULATION_VITESSE = "Vitesse";
 	private static final String MENU_AIDE_TITRE = "Aide";
 	private static final String MENU_AIDE_PROPOS = "À propos de...";
 
@@ -70,12 +71,19 @@ public class MenuFenetre extends JMenuBar {
 	private void ajouterMenuSimulation() {
 		JMenu menuSimulation = new JMenu(MENU_SIMULATION_TITRE);
 		JMenuItem menuChoisir = new JMenuItem(MENU_SIMULATION_CHOISIR);
+		JMenuItem menuVitesse = new JMenuItem(MENU_SIMULATION_VITESSE);
 		menuSimulation.add(menuChoisir);
+		menuSimulation.add(menuVitesse);
 
 		menuChoisir.addActionListener((ActionEvent e) -> {
 			// Ouvrir la fenétre de sélection
 			// TODO - Récupérer la bonne stratégie de vente
 			new FenetreStrategie();
+		});
+
+		menuVitesse.addActionListener((ActionEvent e) -> {
+			// Ouvrir la fenétre de sélection
+			new FenetreVitesse();
 		});
 		add(menuSimulation);
 

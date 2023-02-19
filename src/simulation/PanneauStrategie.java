@@ -1,9 +1,6 @@
 package simulation;
 
-import model.Building;
-import model.Entrepot;
-import model.FixedStrategy;
-import model.RandomStrategy;
+import model.*;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -25,28 +22,23 @@ public class PanneauStrategie extends JPanel {
 	public PanneauStrategie() {
 
 		ButtonGroup groupeBoutons = new ButtonGroup();
-		JRadioButton strategie1 = new JRadioButton("Stratégie 1");
-		JRadioButton strategie2 = new JRadioButton("Stratégie 2");
-		
+		JRadioButton strategie1 = new JRadioButton("Stratégie par défault");
+		JRadioButton strategie2 = new JRadioButton("Stratégie aléatoire");
+		JRadioButton strategie3 = new JRadioButton("Stratégie fixe");
+
 		JButton boutonConfirmer = new JButton("Confirmer");
 
 		boutonConfirmer.addActionListener((ActionEvent e) -> {
-			// TODO - Appeler la bonne stratégie
 			System.out.println(getSelectedButtonText(groupeBoutons));
 
-			switch(getSelectedButtonText(groupeBoutons)) {
-				case "Stratégie 1":
-					for (Building b : productionChain.getBuildingList()) {
-						if (b instanceof Entrepot) {
-							((Entrepot) b).setStrategy(new RandomStrategy());
-						}
+			for (Building b : productionChain.getBuildingList()) {
+				if (b instanceof Entrepot) {
+					switch (getSelectedButtonText(groupeBoutons)) {
+						case "Stratégie par défault": ((Entrepot) b).setStrategy(new DefaultStrategy()); break;
+						case "Stratégie fixe": ((Entrepot) b).setStrategy(new FixedStrategy()); break;
+						case "Stratégie aléatoire": ((Entrepot) b).setStrategy(new RandomStrategy()); break;
 					}
-				case "Stratégie 2":
-					for (Building b : productionChain.getBuildingList()) {
-						if (b instanceof Entrepot) {
-							((Entrepot) b).setStrategy(new FixedStrategy());
-						}
-					}
+				}
 			}
 
 			// Fermer la fenêtre du composant
@@ -61,12 +53,15 @@ public class PanneauStrategie extends JPanel {
 		});
 
 		groupeBoutons.add(strategie1);
-		groupeBoutons.add(strategie2);		
+		groupeBoutons.add(strategie2);
+		groupeBoutons.add(strategie3);
 		add(strategie1);
-		add(strategie2);		
+		add(strategie2);
+		add(strategie3);
 		add(boutonConfirmer);
 		add(boutonAnnuler);
 
+		preSelectPreviousStrategie(groupeBoutons);
 	}
 
 	/**
@@ -83,6 +78,24 @@ public class PanneauStrategie extends JPanel {
 		}
 
 		return null;
+	}
+
+	private void preSelectPreviousStrategie(ButtonGroup groupeBoutons) {
+		for (Enumeration<AbstractButton> boutons = groupeBoutons.getElements(); boutons.hasMoreElements();) {
+			AbstractButton bouton = boutons.nextElement();
+
+			Entrepot entrepot = new Entrepot();
+
+			for (Building b : productionChain.getBuildingList()) {
+				if (b instanceof Entrepot) {
+					entrepot = (Entrepot) b;
+				}
+			}
+
+			if (bouton.getText().equals("Stratégie " + entrepot.getStrategy().getIdentifier())) {
+				bouton.setSelected(true);
+			}
+		}
 	}
 
 }

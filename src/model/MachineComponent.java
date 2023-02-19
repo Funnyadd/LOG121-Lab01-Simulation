@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MachineComponent extends Subject {
+public class MachineComponent {
 
     private int speed;
     private Point position;

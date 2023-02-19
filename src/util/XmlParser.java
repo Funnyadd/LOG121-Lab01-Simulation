@@ -62,6 +62,19 @@ public final class XmlParser {
                 System.out.println(c);
             }
 
+            Entrepot observable = new Entrepot();
+            for (Building b : buildingList) {
+                if (b instanceof Entrepot) {
+                    observable = (Entrepot) b;
+                }
+            }
+
+            for (Building b : buildingList) {
+                if (b instanceof Usine) {
+                    observable.attach((Usine) b);
+                }
+            }
+
             return new ProductionChain(buildingList, cheminList);
 
         } catch (ParserConfigurationException | SAXException | IOException e) {

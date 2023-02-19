@@ -30,6 +30,10 @@ public class EntrepotInput extends Input {
         this.capacity += 1;
     }
 
+    public void removeCapacity() {
+        this.capacity -= 1;
+    }
+
 
     @Override
     public String toString() {

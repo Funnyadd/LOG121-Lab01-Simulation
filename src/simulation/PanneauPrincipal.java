@@ -51,17 +51,31 @@ public class PanneauPrincipal extends JPanel {
 						b.incrementIntervalCounter();
 
 						// Ajout d'une matiere
-						if (b.getIntervalCounter() >= b.getProductionInterval()) {
+						if (b.getIntervalCounter() >= b.getProductionInterval() / productionChain.getSpeedMultiplier()) {
 							b.resetIntervalCounter();
-							b.getOutput().addMachineComponents(new MachineComponent("metal", b.getCoordinates()));
+							if (((Usine) b).isTurnedOn()) {
+								b.getOutput().addMachineComponents(new MachineComponent("metal", b.getCoordinates()));
+							}
 						}
 
 						drawMachineComponents(b, g);
 						break;
 					case "entrepot":
+						Entrepot entrepot = ((Entrepot) b);
+						((Entrepot) b).sellPlane();
+						if (entrepot.getInput().getCapacity() >= entrepot.getInput().getMaxCapacity() && !entrepot.isFull()) {
+							entrepot.notifyObservers();
+							entrepot.setFull(true);
+						}
+						if (entrepot.getInput().getCapacity() < entrepot.getInput().getMaxCapacity() && entrepot.isFull()) {
+							entrepot.notifyObservers();
+							entrepot.setFull(false);
+						}
 						break;
 					default:
-						createMachineComponents(b);
+						if (((Usine) b).isTurnedOn()) {
+							createMachineComponents(b);
+						}
 						drawMachineComponents(b, g);
 						break;
 				}
@@ -102,7 +116,7 @@ public class PanneauPrincipal extends JPanel {
 		}
 
 		// Add component
-		if (usine.getIntervalCounter() >= usine.getProductionInterval()) {
+		if (usine.getIntervalCounter() >= usine.getProductionInterval() / productionChain.getSpeedMultiplier()) {
 			usine.resetIntervalCounter();
 			usine.getOutput().addMachineComponents(new MachineComponent(b.getOutput().getType(), usine.getCoordinates()));
 		}
@@ -127,6 +141,11 @@ public class PanneauPrincipal extends JPanel {
 
 			// Draw components
 			g.drawImage(m.getImage(), m.getPosition().x - 15, m.getPosition().y - 15, this);
+
+			// Set the selected speed if it changed
+			if (m.getSpeed() != productionChain.getSpeedMultiplier()) {
+				m.setSpeed(productionChain.getSpeedMultiplier());
+			}
 
 			// Change position of component for next redraw
 			m.getPosition().translate(m.getSpeed() * xMultiplier, m.getSpeed() * yMultiplier);
@@ -180,15 +199,17 @@ public class PanneauPrincipal extends JPanel {
 			EntrepotInput input = ((Entrepot) b).getInput();
 
 			for (int i = 3; i > 0; i--) {
-				if (input.getCapacity() >= (int) (input.getMaxCapacity() * i * 0.333)) {
+				if (input.getCapacity() >= input.getMaxCapacity() * i * 0.333) {
 					return i;
 				}
 			}
 		}
 		else {
-			for (int i = 3; i > 0; i--) {
-				if (b.getIntervalCounter() >= b.getProductionInterval() * i * 0.3) {
-					return i;
+			if (((Usine) b).isTurnedOn()) {
+				for (int i = 3; i > 0; i--) {
+					if (b.getIntervalCounter() >= b.getProductionInterval() * i * 0.3 / productionChain.getSpeedMultiplier()) {
+						return i;
+					}
 				}
 			}
 		}
