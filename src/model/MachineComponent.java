@@ -1,17 +1,25 @@
 package model;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class MachineComponent extends Icon {
+public class MachineComponent extends Subject {
 
     private int speed;
     private Point position;
+    private String type;
+    private BufferedImage image;
+    private int destinationId;
 
     public MachineComponent(String type, Point initialPosition) {
-        super(type);
-        super.setPath(getPathFromType(type));
+        this.type = type;
         this.position = new Point(initialPosition);
         this.speed = 1;
+        this.destinationId = -1;
+        this.image = getImageFromType(type);
     }
 
     public int getSpeed() {
@@ -30,32 +38,67 @@ public class MachineComponent extends Icon {
         this.position = position;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    public int getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(int destinationId) {
+        this.destinationId = destinationId;
+    }
+
     @Override
     public String toString() {
         return "MachineComponent{" +
-                "type='" + super.getType() + "'" +
-                ", path='" + super.getPath() + "'" +
+                "type='" + type + "'" +
                 ", speed=" + speed +
                 ", position=[x:" + position.x + ", y:" + position.y + "]" +
                 '}';
     }
 
-    private String getPathFromType(String type) {
+    private BufferedImage getImageFromType(String type) {
         final String METAL_PATH = "src\\ressources\\metal.png";
         final String AILE_PATH = "src\\ressources\\aile.png";
         final String MOTEUR_PATH = "src\\ressources\\moteur.png";
         final String AVION_PATH = "src\\ressources\\avion.png";
 
+        String path = METAL_PATH;
+
         switch (type) {
             case "metal":
-                return METAL_PATH;
+                path = METAL_PATH;
+                break;
             case "aile":
-                 return AILE_PATH;
+                path = AILE_PATH;
+                break;
             case "moteur":
-                return MOTEUR_PATH;
+                path = MOTEUR_PATH;
+                break;
             case "avion":
-                return AVION_PATH;
+                path = AVION_PATH;
+                break;
         }
-        return METAL_PATH;
+
+        try {
+            return ImageIO.read(new File(path));
+        } catch (IOException e) {
+            System.out.println("Error while reading one of the images");
+            throw new RuntimeException(e);
+        }
     }
 }

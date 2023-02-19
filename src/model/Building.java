@@ -8,30 +8,31 @@ public class Building {
 
     private String type;
     private List<Icon> icon;
-    private List<Input> input;
     private Output output;
     private int productionInterval;
     private int id;
     private Point coordinates;
+    private int intervalCounter;
 
     public Building() {
         this.type = "";
         this.icon = new LinkedList<>();
-        this.input = new LinkedList<>();
         this.output = new Output();
         this.productionInterval = 0;
         this.coordinates = new Point();
         this.id = 0;
+        this.intervalCounter = 0;
     }
 
-    public Building(String type, List<Icon> icon, List<Input> input, Output output, int productionInterval, Point coordinates, int id) {
+    public Building(String type, List<Icon> icon, Output output, int productionInterval, Point coordinates, int id) {
         this.type = type;
         this.icon = icon;
-        this.input = input;
         this.output = output;
         this.productionInterval = productionInterval;
         this.coordinates = coordinates;
         this.id = id;
+        this.intervalCounter = 0;
+
     }
 
     public String getType() {
@@ -48,14 +49,6 @@ public class Building {
 
     public void setIcon(List<Icon> icon) {
         this.icon = icon;
-    }
-
-    public List<Input> getInput() {
-        return input;
-    }
-
-    public void setInput(List<Input> input) {
-        this.input = input;
     }
 
     public Output getOutput() {
@@ -90,13 +83,28 @@ public class Building {
         this.id = id;
     }
 
+    public int getIntervalCounter() {
+        return intervalCounter;
+    }
+
+    public void setIntervalCounter(int intervalCounter) {
+        this.intervalCounter = intervalCounter;
+    }
+
+    public void resetIntervalCounter() {
+        this.intervalCounter = 0;
+    }
+
+    public void incrementIntervalCounter() {
+        this.intervalCounter += 1;
+    }
+
     @Override
     public String toString() {
         return "{" +
                 "type='" + type + '\'' +
                 ", id=" + id +
                 ", productionInterval=" + productionInterval +
-                ", inputs=" + input +
                 ", " + output +
                 ", coordinates=[x:" + coordinates.x + ", y:" + coordinates.y + "]" +
                 ", icons=" + icon +

@@ -1,11 +1,12 @@
 package model;
 
-public class Entrepot extends Building implements Subject {
+public class Entrepot extends Building {
 
     private Strategy strategy;
+    private EntrepotInput input;
 
     public Entrepot(Building b) {
-        super(b.getType(), b.getIcon(), b.getInput(), b.getOutput(), b.getProductionInterval(), b.getCoordinates(), b.getId());
+        super(b.getType(), b.getIcon(), b.getOutput(), b.getProductionInterval(), b.getCoordinates(), b.getId());
     }
 
     public Strategy getStrategy() {
@@ -16,8 +17,19 @@ public class Entrepot extends Building implements Subject {
         this.strategy = strategy;
     }
 
+    public EntrepotInput getInput() {
+        return input;
+    }
+
+    public void setInput(EntrepotInput input) {
+        this.input = input;
+    }
+
     @Override
     public String toString() {
-        return "Entrepot" + super.toString();
+        return "Entrepot{" +
+                "strategy=" + strategy +
+                ", input=" + input +
+                '}';
     }
 }

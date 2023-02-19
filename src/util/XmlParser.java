@@ -145,11 +145,11 @@ public final class XmlParser {
                                         String inputType = configuration.getAttributes().getNamedItem(TYPE_ATTRIBUTE).getNodeValue();
                                         MachineComponent component = new MachineComponent(inputType, b.getCoordinates());
 
-                                        if (b.getType().equals(ENTREPOT_TYPE)) {
-                                            String inputCapacity = configuration.getAttributes().getNamedItem("capacite").getNodeValue();
-                                            inputList.add(new EntrepotInput(component, inputCapacity));
+                                        if (b instanceof Entrepot) {
+                                            int inputCapacity = Integer.parseInt(configuration.getAttributes().getNamedItem("capacite").getNodeValue());
+                                            ((Entrepot) b).setInput(new EntrepotInput(component, inputCapacity));
                                         } else {
-                                            String inputQuantity = configuration.getAttributes().getNamedItem("quantite").getNodeValue();
+                                            int inputQuantity = Integer.parseInt(configuration.getAttributes().getNamedItem("quantite").getNodeValue());
                                             inputList.add(new UsineInput(component, inputQuantity));
                                         }
                                         break;
@@ -162,7 +162,14 @@ public final class XmlParser {
                                         b.setProductionInterval(parseInt(configuration.getTextContent()));
                                         break;
                                 }
-                                b.setInput(inputList);
+
+                                if (b instanceof Usine) {
+                                    List<UsineInput> usineInputList = new LinkedList<>();
+                                    for (Input input : inputList) {
+                                        usineInputList.add((UsineInput) input);
+                                    }
+                                    ((Usine) b).setInputList(usineInputList);
+                                }
                             }
                         }
                     }
