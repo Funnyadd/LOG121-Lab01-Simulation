@@ -1,4 +1,4 @@
-package model;
+package model.Strategy;
 
 public class RandomStrategy implements Strategy {
 

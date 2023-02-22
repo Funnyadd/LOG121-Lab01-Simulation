@@ -7,7 +7,7 @@ public class ProductionChain {
 
     private List<Building> buildingList;
     private List<Chemin> cheminList;
-    private int speedMultiplier;
+    private double speedMultiplier;
 
     public ProductionChain() {
         this.buildingList = new LinkedList<>();
@@ -37,11 +37,11 @@ public class ProductionChain {
         this.cheminList = cheminList;
     }
 
-    public int getSpeedMultiplier() {
+    public double getSpeedMultiplier() {
         return speedMultiplier;
     }
 
-    public void setSpeedMultiplier(int speedMultiplier) {
+    public void setSpeedMultiplier(double speedMultiplier) {
         this.speedMultiplier = speedMultiplier;
     }
 

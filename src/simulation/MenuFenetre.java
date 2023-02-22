@@ -25,6 +25,8 @@ public class MenuFenetre extends JMenuBar {
 	private static final String MENU_AIDE_TITRE = "Aide";
 	private static final String MENU_AIDE_PROPOS = "À propos de...";
 
+	private final JMenu menuSimulation = new JMenu(MENU_SIMULATION_TITRE);
+
 	public MenuFenetre() {
 		ajouterMenuFichier();
 		ajouterMenuSimulation();
@@ -52,6 +54,9 @@ public class MenuFenetre extends JMenuBar {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fileChooser.getSelectedFile();
 				Simulation.productionChain = parseXml(selectedFile.getAbsolutePath());
+
+				// Activer le button simulation quand un fichier de config est sélectionné
+				menuSimulation.setEnabled(true);
 			}
 		});
 		
@@ -69,7 +74,6 @@ public class MenuFenetre extends JMenuBar {
 	 * Créer le menu de Simulation
 	 */
 	private void ajouterMenuSimulation() {
-		JMenu menuSimulation = new JMenu(MENU_SIMULATION_TITRE);
 		JMenuItem menuChoisir = new JMenuItem(MENU_SIMULATION_CHOISIR);
 		JMenuItem menuVitesse = new JMenuItem(MENU_SIMULATION_VITESSE);
 		menuSimulation.add(menuChoisir);
@@ -85,6 +89,7 @@ public class MenuFenetre extends JMenuBar {
 			// Ouvrir la fenétre de sélection
 			new FenetreVitesse();
 		});
+		menuSimulation.setEnabled(false);
 		add(menuSimulation);
 
 	}

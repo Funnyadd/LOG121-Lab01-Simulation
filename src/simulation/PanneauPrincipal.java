@@ -67,6 +67,7 @@ public class PanneauPrincipal extends JPanel {
 							entrepot.notifyObservers();
 							entrepot.setFull(true);
 						}
+
 						if (entrepot.getInput().getCapacity() < entrepot.getInput().getMaxCapacity() && entrepot.isFull()) {
 							entrepot.notifyObservers();
 							entrepot.setFull(false);
@@ -76,6 +77,7 @@ public class PanneauPrincipal extends JPanel {
 						if (((Usine) b).isTurnedOn()) {
 							createMachineComponents(b);
 						}
+
 						drawMachineComponents(b, g);
 						break;
 				}
@@ -148,7 +150,7 @@ public class PanneauPrincipal extends JPanel {
 			}
 
 			// Change position of component for next redraw
-			m.getPosition().translate(m.getSpeed() * xMultiplier, m.getSpeed() * yMultiplier);
+			m.getPosition().translate((int) (m.getSpeed() * xMultiplier), (int) (m.getSpeed() * yMultiplier));
 
 			// Check if component arrived at destination
 			if (xMultiplier < 0 && m.getPosition().x <= building.getCoordinates().x) {
@@ -195,22 +197,15 @@ public class PanneauPrincipal extends JPanel {
 	}
 
 	private int getImageBasedOnCompletion(Building b) {
-		if (b instanceof Entrepot) {
-			EntrepotInput input = ((Entrepot) b).getInput();
-
-			for (int i = 3; i > 0; i--) {
-				if (input.getCapacity() >= input.getMaxCapacity() * i * 0.333) {
+		for (int i = 3; i > 0; i--) {
+			if (b instanceof Entrepot &&
+				((Entrepot) b).getInput().getCapacity() >= ((Entrepot) b).getInput().getMaxCapacity() * i * 0.333) {
 					return i;
-				}
 			}
-		}
-		else {
-			if (((Usine) b).isTurnedOn()) {
-				for (int i = 3; i > 0; i--) {
-					if (b.getIntervalCounter() >= b.getProductionInterval() * i * 0.3 / productionChain.getSpeedMultiplier()) {
-						return i;
-					}
-				}
+
+			if (b instanceof Usine && ((Usine) b).isTurnedOn() &&
+				b.getIntervalCounter() >= (b.getProductionInterval() * i * 0.3) / productionChain.getSpeedMultiplier()) {
+					return i;
 			}
 		}
 		return 0;

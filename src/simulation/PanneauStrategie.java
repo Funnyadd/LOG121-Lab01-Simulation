@@ -1,6 +1,9 @@
 package simulation;
 
 import model.*;
+import model.Strategy.DefaultStrategy;
+import model.Strategy.FixedStrategy;
+import model.Strategy.RandomStrategy;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

@@ -1,5 +1,8 @@
 package model;
 
+import model.Strategy.DefaultStrategy;
+import model.Strategy.Strategy;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +40,7 @@ public class Entrepot extends Building {
     }
 
     public void sellPlane() {
-        if (strategy.salesAlgorithm()) {
+        if (strategy.salesAlgorithm() && input.getCapacity() > 0) {
             input.removeCapacity();
         }
     }

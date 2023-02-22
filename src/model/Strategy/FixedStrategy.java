@@ -1,4 +1,7 @@
-package model;
+package model.Strategy;
+
+import model.Building;
+import model.Entrepot;
 
 import static simulation.Simulation.productionChain;
 

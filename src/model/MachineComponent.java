@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MachineComponent {
 
-    private int speed;
+    private double speed;
     private Point position;
     private String type;
     private BufferedImage image;
@@ -22,11 +22,11 @@ public class MachineComponent {
         this.image = getImageFromType(type);
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
