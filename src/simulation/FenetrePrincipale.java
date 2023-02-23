@@ -13,10 +13,10 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	private static final String TITRE_FENETRE = "Laboratoire 1 : LOG121 - Simulation";
 	public static final Dimension DIMENSION = new Dimension(700, 700);
 
+	public MenuFenetre menuFenetre = new MenuFenetre();
+
 	public FenetrePrincipale() {
-		PanneauPrincipal panneauPrincipal = new PanneauPrincipal();
-		MenuFenetre menuFenetre = new MenuFenetre();
-		add(panneauPrincipal);
+		add(new PanneauPrincipal());
 		add(menuFenetre, BorderLayout.NORTH);
 		// Faire en sorte que le X de la fenêtre ferme la fenêtre
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

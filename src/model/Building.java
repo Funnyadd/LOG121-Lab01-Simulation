@@ -87,10 +87,6 @@ public class Building {
         return intervalCounter;
     }
 
-    public void setIntervalCounter(int intervalCounter) {
-        this.intervalCounter = intervalCounter;
-    }
-
     public void resetIntervalCounter() {
         this.intervalCounter = 0;
     }

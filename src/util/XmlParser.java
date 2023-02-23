@@ -75,7 +75,7 @@ public final class XmlParser {
                 }
             }
 
-            return new ProductionChain(buildingList, cheminList);
+            return new ProductionChain(buildingList, cheminList, filePath);
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
             System.out.println("Error parsing xml file.");

@@ -2,6 +2,6 @@ package model;
 
 interface Observer {
 
-    void update();
+    void turnOnOff();
 
 }

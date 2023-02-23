@@ -4,6 +4,7 @@ import model.*;
 
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -51,7 +52,7 @@ public class PanneauPrincipal extends JPanel {
 						b.incrementIntervalCounter();
 
 						// Ajout d'une matiere
-						if (b.getIntervalCounter() >= b.getProductionInterval() / productionChain.getSpeedMultiplier()) {
+						if (b.getIntervalCounter() >= (b.getProductionInterval() / productionChain.getOptimisationMultiplier()) / productionChain.getSpeedMultiplier()) {
 							b.resetIntervalCounter();
 							if (((Usine) b).isTurnedOn()) {
 								b.getOutput().addMachineComponents(new MachineComponent("metal", b.getCoordinates()));
@@ -63,14 +64,32 @@ public class PanneauPrincipal extends JPanel {
 					case "entrepot":
 						Entrepot entrepot = ((Entrepot) b);
 						((Entrepot) b).sellPlane();
+
 						if (entrepot.getInput().getCapacity() >= entrepot.getInput().getMaxCapacity() && !entrepot.isFull()) {
-							entrepot.notifyObservers();
+							entrepot.turnUsinesOnOff();
 							entrepot.setFull(true);
 						}
 
-						if (entrepot.getInput().getCapacity() < entrepot.getInput().getMaxCapacity() && entrepot.isFull()) {
-							entrepot.notifyObservers();
-							entrepot.setFull(false);
+						if (entrepot.getInput().getCapacity() < entrepot.getInput().getMaxCapacity()) {
+
+							if (productionChain.isOptimisation()) {
+								double optimisationProportion = 1 - ((double) entrepot.getInput().getCapacity() / (double) entrepot.getInput().getMaxCapacity());
+
+								if (entrepot.getInput().getCapacity() > 0 && productionChain.getOptimisationMultiplier() != optimisationProportion) {
+									productionChain.setOptimisationMultiplier(optimisationProportion);
+								}
+								else if (entrepot.getInput().getCapacity() == 0){
+									productionChain.setOptimisationMultiplier(1);
+								}
+							}
+							else if (productionChain.getOptimisationMultiplier() != 1) {
+								productionChain.setOptimisationMultiplier(1);
+							}
+
+							if (entrepot.isFull()) {
+								entrepot.turnUsinesOnOff();
+								entrepot.setFull(false);
+							}
 						}
 						break;
 					default:
@@ -84,7 +103,11 @@ public class PanneauPrincipal extends JPanel {
 			}
 
 			for (Building b : productionChain.getBuildingList()) {
-				g.drawImage(b.getIcon().get(getImageBasedOnCompletion(b)).getImage(), b.getCoordinates().x - 15, b.getCoordinates().y - 15, this);
+				g.drawImage(
+						b.getIcon().get(getImageBasedOnCompletion(b)).getImage(),
+						b.getCoordinates().x - 15,
+						b.getCoordinates().y - 15,
+						this);
 			}
 		}
 	}
@@ -118,15 +141,15 @@ public class PanneauPrincipal extends JPanel {
 		}
 
 		// Add component
-		if (usine.getIntervalCounter() >= usine.getProductionInterval() / productionChain.getSpeedMultiplier()) {
+		if (usine.getIntervalCounter() >= (usine.getProductionInterval() / productionChain.getOptimisationMultiplier()) / productionChain.getSpeedMultiplier()) {
 			usine.resetIntervalCounter();
 			usine.getOutput().addMachineComponents(new MachineComponent(b.getOutput().getType(), usine.getCoordinates()));
 		}
 	}
 
 	private void drawMachineComponents(Building b, Graphics g) {
-		var machineComponentList = b.getOutput().getMachineComponents();
-		var machineComponentsToRemove = new LinkedList<Integer>();
+		List<MachineComponent> machineComponentList = b.getOutput().getMachineComponents();
+		List<Integer> machineComponentsToRemove = new LinkedList<>();
 
 		for (int i = 0; i < machineComponentList.size(); i++) {
 			MachineComponent m = machineComponentList.get(i);
@@ -154,28 +177,10 @@ public class PanneauPrincipal extends JPanel {
 
 			// Check if component arrived at destination
 			if (xMultiplier < 0 && m.getPosition().x <= building.getCoordinates().x) {
-				if (yMultiplier < 0) {
-					if (m.getPosition().y <= building.getCoordinates().y) {
-						machineComponentsToRemove.add(i);
-					}
-				}
-				else {
-					if (m.getPosition().y >= building.getCoordinates().y) {
-						machineComponentsToRemove.add(i);
-					}
-				}
+				verifyComponentYPosition(b, machineComponentList, machineComponentsToRemove, i, m, building, yMultiplier);
 			}
 			else if (m.getPosition().x >= building.getCoordinates().x) {
-				if (yMultiplier < 0) {
-					if (m.getPosition().y <= building.getCoordinates().y) {
-						machineComponentsToRemove.add(i);
-					}
-				}
-				else {
-					if (m.getPosition().y >= building.getCoordinates().y) {
-						machineComponentsToRemove.add(i);
-					}
-				}
+				verifyComponentYPosition(b, machineComponentList, machineComponentsToRemove, i, m, building, yMultiplier);
 			}
 		}
 
@@ -196,6 +201,27 @@ public class PanneauPrincipal extends JPanel {
 		}
 	}
 
+	private void verifyComponentYPosition(
+			Building b,
+			List<MachineComponent> machineComponentList,
+			List<Integer> machineComponentsToRemove,
+			int i,
+			MachineComponent m,
+			Building building,
+			int yMultiplier) {
+
+		if (yMultiplier < 0) {
+			if (m.getPosition().y <= building.getCoordinates().y) {
+				machineComponentsToRemove.add(i);
+			}
+		}
+		else {
+			if (m.getPosition().y >= building.getCoordinates().y) {
+				machineComponentsToRemove.add(i);
+			}
+		}
+	}
+
 	private int getImageBasedOnCompletion(Building b) {
 		for (int i = 3; i > 0; i--) {
 			if (b instanceof Entrepot &&
@@ -204,7 +230,7 @@ public class PanneauPrincipal extends JPanel {
 			}
 
 			if (b instanceof Usine && ((Usine) b).isTurnedOn() &&
-				b.getIntervalCounter() >= (b.getProductionInterval() * i * 0.3) / productionChain.getSpeedMultiplier()) {
+				b.getIntervalCounter() >= (b.getProductionInterval() * i * 0.3 / productionChain.getOptimisationMultiplier()) / productionChain.getSpeedMultiplier()) {
 					return i;
 			}
 		}

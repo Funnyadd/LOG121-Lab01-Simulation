@@ -9,6 +9,6 @@ public class DefaultStrategy implements Strategy {
 
     @Override
     public String getIdentifier() {
-        return "par défault";
+        return "Par défault";
     }
 }

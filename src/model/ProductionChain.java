@@ -3,38 +3,39 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+import static simulation.Simulation.productionChain;
+
 public class ProductionChain {
 
+    private String filePath;
     private List<Building> buildingList;
     private List<Chemin> cheminList;
-    private double speedMultiplier;
+    private double speedMultiplier = 1;
+    private double optimisationMultiplier = 1;
+    private boolean isOptimisation = true;
+    private boolean isOn = true;
 
     public ProductionChain() {
         this.buildingList = new LinkedList<>();
         this.cheminList = new LinkedList<>();
-        this.speedMultiplier = 1;
     }
 
-    public ProductionChain(List<Building> buildings, List<Chemin> cheminList) {
+    public ProductionChain(List<Building> buildings, List<Chemin> cheminList, String filePath) {
         this.buildingList = buildings;
         this.cheminList = cheminList;
-        this.speedMultiplier = 1;
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     public List<Building> getBuildingList() {
         return buildingList;
     }
 
-    public void setBuildingList(List<Building> buildings) {
-        this.buildingList = buildings;
-    }
-
     public List<Chemin> getCheminList() {
         return cheminList;
-    }
-
-    public void setCheminList(List<Chemin> cheminList) {
-        this.cheminList = cheminList;
     }
 
     public double getSpeedMultiplier() {
@@ -43,6 +44,30 @@ public class ProductionChain {
 
     public void setSpeedMultiplier(double speedMultiplier) {
         this.speedMultiplier = speedMultiplier;
+    }
+
+    public double getOptimisationMultiplier() {
+        return optimisationMultiplier;
+    }
+
+    public void setOptimisationMultiplier(double optimisationMultiplier) {
+        this.optimisationMultiplier = optimisationMultiplier;
+    }
+
+    public boolean isOptimisation() {
+        return isOptimisation;
+    }
+
+    public void setOptimisation(boolean optimisation) {
+        isOptimisation = optimisation;
+    }
+
+    public boolean isOn() {
+        return isOn;
+    }
+
+    public void setIsOn(boolean on) {
+        isOn = on;
     }
 
     public Building getBuildingById(int id) {
@@ -57,5 +82,14 @@ public class ProductionChain {
             if (c.getFrom() == id) return c;
         }
         return new Chemin();
+    }
+
+    public Entrepot getEntrepot() {
+        for (Building b : productionChain.getBuildingList()) {
+            if (b instanceof Entrepot) {
+                return ((Entrepot) b);
+            }
+        }
+        return null;
     }
 }

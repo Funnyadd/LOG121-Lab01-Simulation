@@ -20,12 +20,12 @@ public class MenuFenetre extends JMenuBar {
 	private static final String MENU_FICHIER_CHARGER = "Charger";
 	private static final String MENU_FICHIER_QUITTER = "Quitter";
 	private static final String MENU_SIMULATION_TITRE = "Simulation";
-	private static final String MENU_SIMULATION_CHOISIR = "Choisir";
-	private static final String MENU_SIMULATION_VITESSE = "Vitesse";
+	private static final String MENU_SIMULATION_OPTIONS = "Options";
+	private static final String MENU_SIMULATION_VITESSE = "Contrôles";
 	private static final String MENU_AIDE_TITRE = "Aide";
 	private static final String MENU_AIDE_PROPOS = "À propos de...";
 
-	private final JMenu menuSimulation = new JMenu(MENU_SIMULATION_TITRE);
+	public final JMenu menuSimulation = new JMenu(MENU_SIMULATION_TITRE);
 
 	public MenuFenetre() {
 		ajouterMenuFichier();
@@ -74,20 +74,20 @@ public class MenuFenetre extends JMenuBar {
 	 * Créer le menu de Simulation
 	 */
 	private void ajouterMenuSimulation() {
-		JMenuItem menuChoisir = new JMenuItem(MENU_SIMULATION_CHOISIR);
+		JMenuItem menuOptions = new JMenuItem(MENU_SIMULATION_OPTIONS);
 		JMenuItem menuVitesse = new JMenuItem(MENU_SIMULATION_VITESSE);
-		menuSimulation.add(menuChoisir);
+		menuSimulation.add(menuOptions);
 		menuSimulation.add(menuVitesse);
 
-		menuChoisir.addActionListener((ActionEvent e) -> {
+		menuOptions.addActionListener((ActionEvent e) -> {
 			// Ouvrir la fenétre de sélection
 			// TODO - Récupérer la bonne stratégie de vente
-			new FenetreStrategie();
+			new FenetreOptions();
 		});
 
 		menuVitesse.addActionListener((ActionEvent e) -> {
 			// Ouvrir la fenétre de sélection
-			new FenetreVitesse();
+			new FenetreControl();
 		});
 		menuSimulation.setEnabled(false);
 		add(menuSimulation);
@@ -105,10 +105,15 @@ public class MenuFenetre extends JMenuBar {
 		menuPropos.addActionListener((ActionEvent e) -> {
 			JOptionPane.showMessageDialog(null,
 					"<html><p>Application simulant une chaine de production d'avions.</p>" + "<br>"
+							+ "<p>Auteur &nbsp;: &nbsp; Adam Mihajlovic</p>"
+							+ "<br>"
+							+ "<p>Contributeurs &nbsp;:</p>"
 							+ "<p>&copy; &nbsp; 2017 &nbsp; Ghizlane El Boussaidi</p>"
 							+ "<p>&copy; &nbsp; 2017 &nbsp; Dany Boisvert</p>"
-							+ "<p>&copy; &nbsp; 2017 &nbsp; Vincent Mattard</p>" + "<br>"
-							+ "<p>&Eacute;cole de technologie sup&eacute;rieure</p></html>");
+							+ "<p>&copy; &nbsp; 2017 &nbsp; Vincent Mattard</p>"
+							+ "<br>"
+							+ "<p>&Eacute;cole de technologie sup&eacute;rieure</p></html>"
+			);
 		});
 		add(menuAide);
 	}

@@ -2,7 +2,7 @@ package model;
 
 public class EntrepotInput extends Input {
 
-    private int maxCapacity;
+    private final int maxCapacity;
     private int capacity;
 
     public EntrepotInput(MachineComponent component, int maxCapacity) {
@@ -12,14 +12,6 @@ public class EntrepotInput extends Input {
 
     public int getMaxCapacity() {
         return maxCapacity;
-    }
-
-    public void setMaxCapacity(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     public int getCapacity() {

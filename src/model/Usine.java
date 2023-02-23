@@ -26,11 +26,6 @@ public class Usine extends Building implements Observer {
         return isTurnedOn;
     }
 
-    public void setTurnedOn(boolean turnedOn) {
-        isTurnedOn = turnedOn;
-
-    }
-
     @Override
     public String toString() {
         return "Usine{" +
@@ -40,7 +35,7 @@ public class Usine extends Building implements Observer {
     }
 
     @Override
-    public void update() {
+    public void turnOnOff() {
         this.isTurnedOn = !this.isTurnedOn;
     }
 }

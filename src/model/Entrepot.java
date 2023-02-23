@@ -70,9 +70,9 @@ public class Entrepot extends Building {
         this.listObservers.remove(o);
     }
 
-    public void notifyObservers() {
+    public void turnUsinesOnOff() {
         for (Observer obv : listObservers) {
-            obv.update();
+            obv.turnOnOff();
         }
     }
 }

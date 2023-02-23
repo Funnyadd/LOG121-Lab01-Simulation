@@ -12,10 +12,6 @@ public class Input {
         return component;
     }
 
-    public void setComponent(MachineComponent component) {
-        this.component = component;
-    }
-
     @Override
     public String toString() {
         return component.toString();

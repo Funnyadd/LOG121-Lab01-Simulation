@@ -7,25 +7,19 @@ public class Output {
 
     private String type;
 
-    private List<MachineComponent> machineComponents;
+    private final List<MachineComponent> machineComponents = new LinkedList<>();
 
     public Output() {
         this.type = "";
-        this.machineComponents = new LinkedList<>();
     }
 
     public Output(String type) {
         this.type = type;
-        this.machineComponents = new LinkedList<>();
 
     }
 
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public List<MachineComponent> getMachineComponents() {
@@ -34,14 +28,6 @@ public class Output {
 
     public void addMachineComponents(MachineComponent machineComponent) {
         machineComponents.add(machineComponent);
-    }
-
-    public void removeMachineComponents(MachineComponent machineComponent) {
-        machineComponents.remove(machineComponent);
-    }
-
-    public void setMachineComponents(List<MachineComponent> machineComponents) {
-        this.machineComponents = machineComponents;
     }
 
     @Override

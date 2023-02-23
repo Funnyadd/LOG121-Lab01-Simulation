@@ -2,7 +2,7 @@ package model;
 
 public class UsineInput extends Input {
 
-        private int maxQuantity;
+        private final int maxQuantity;
         private int quantity;
 
         public UsineInput(MachineComponent component, int maxQuantity) {
@@ -15,16 +15,8 @@ public class UsineInput extends Input {
                 return maxQuantity;
         }
 
-        public void setMaxQuantity(int maxQuantity) {
-                this.maxQuantity = maxQuantity;
-        }
-
         public int getQuantity() {
                 return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-                this.quantity = quantity;
         }
 
         public void addQuantity() {

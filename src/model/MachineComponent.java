@@ -34,24 +34,12 @@ public class MachineComponent {
         return position;
     }
 
-    public void setPosition(Point position) {
-        this.position = position;
-    }
-
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public BufferedImage getImage() {
         return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
     }
 
     public int getDestinationId() {
