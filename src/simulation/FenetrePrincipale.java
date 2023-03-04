@@ -35,7 +35,6 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("REPAINT")) {
 			repaint();
-//			System.out.println(evt.getNewValue());
 		}
 	}
 }

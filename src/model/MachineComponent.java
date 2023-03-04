@@ -8,10 +8,10 @@ import java.io.IOException;
 
 public class MachineComponent {
 
+    private final Point position;
+    private final String type;
+    private final BufferedImage image;
     private double speed;
-    private Point position;
-    private String type;
-    private BufferedImage image;
     private int destinationId;
 
     public MachineComponent(String type, Point initialPosition) {

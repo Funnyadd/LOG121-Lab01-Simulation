@@ -2,8 +2,8 @@ package model;
 
 public class Chemin {
 
-    private int from;
-    private int to;
+    private final int from;
+    private final int to;
 
     public Chemin(int from, int to) {
         this.from = from;

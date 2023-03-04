@@ -48,7 +48,7 @@ public class PanneauPrincipal extends JPanel {
 			for (Building b : productionChain.getBuildingList()) {
 				switch(b.getType()) {
 					case "usine-matiere":
-						// Increment Interval counter whenthe component is drawn on the screen
+						// Ajouter 1 au counter d'interval quand la composante est déssiné sur l'interface
 						b.incrementIntervalCounter();
 
 						// Ajout d'une matiere
@@ -128,7 +128,7 @@ public class PanneauPrincipal extends JPanel {
 
 	private void createMachineComponents(Building b) {
 		var usine = (Usine) b;
-		// Increment Interval counter when the component is drawn on the screen
+		// Ajouter 1 au counter d'interval quand la composante est déssiné sur l'interface
 		if (usine.getIntervalCounter() > 0) {
 			usine.incrementIntervalCounter();
 		}
@@ -140,7 +140,7 @@ public class PanneauPrincipal extends JPanel {
 			}
 		}
 
-		// Add component
+		// Ajout d'un composant
 		if (usine.getIntervalCounter() >= (usine.getProductionInterval() / productionChain.getOptimisationMultiplier()) / productionChain.getSpeedMultiplier()) {
 			usine.resetIntervalCounter();
 			usine.getOutput().addMachineComponents(new MachineComponent(b.getOutput().getType(), usine.getCoordinates()));
@@ -164,27 +164,27 @@ public class PanneauPrincipal extends JPanel {
 			int xMultiplier = getVectorMultiplier(building.getCoordinates().x, b.getCoordinates().x);
 			int yMultiplier = getVectorMultiplier(building.getCoordinates().y, b.getCoordinates().y);
 
-			// Draw components
+			// Déssiner les composantes
 			g.drawImage(m.getImage(), m.getPosition().x - 15, m.getPosition().y - 15, this);
 
-			// Set the selected speed if it changed
+			// Changer la vitesse si changé par l'utilisateur
 			if (m.getSpeed() != productionChain.getSpeedMultiplier()) {
 				m.setSpeed(productionChain.getSpeedMultiplier());
 			}
 
-			// Change position of component for next redraw
+			// Changer la position de la composante pour le prochain "repaint"
 			m.getPosition().translate((int) (m.getSpeed() * xMultiplier), (int) (m.getSpeed() * yMultiplier));
 
-			// Check if component arrived at destination
+			// Vérifier que la composante est arrivée à destination
 			if (xMultiplier < 0 && m.getPosition().x <= building.getCoordinates().x) {
-				verifyComponentYPosition(b, machineComponentList, machineComponentsToRemove, i, m, building, yMultiplier);
+				verifyComponentYPosition(machineComponentsToRemove, i, m, building, yMultiplier);
 			}
 			else if (m.getPosition().x >= building.getCoordinates().x) {
-				verifyComponentYPosition(b, machineComponentList, machineComponentsToRemove, i, m, building, yMultiplier);
+				verifyComponentYPosition(machineComponentsToRemove, i, m, building, yMultiplier);
 			}
 		}
 
-		// Remove machineComponents that arrived at the next usine
+		// Enlever les machineComponents qui sont arrivés à la prochaine usine
 		for (int i : machineComponentsToRemove) {
 			Building nextBuilding = productionChain.getBuildingById(machineComponentList.get(i).getDestinationId());
 			if (nextBuilding instanceof Entrepot) {
@@ -202,8 +202,6 @@ public class PanneauPrincipal extends JPanel {
 	}
 
 	private void verifyComponentYPosition(
-			Building b,
-			List<MachineComponent> machineComponentList,
 			List<Integer> machineComponentsToRemove,
 			int i,
 			MachineComponent m,

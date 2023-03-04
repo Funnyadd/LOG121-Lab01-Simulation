@@ -3,13 +3,11 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
-import static simulation.Simulation.productionChain;
-
 public class ProductionChain {
 
+    private final List<Building> buildingList;
+    private final List<Chemin> cheminList;
     private String filePath;
-    private List<Building> buildingList;
-    private List<Chemin> cheminList;
     private double speedMultiplier = 1;
     private double optimisationMultiplier = 1;
     private boolean isOptimisation = true;
@@ -85,7 +83,7 @@ public class ProductionChain {
     }
 
     public Entrepot getEntrepot() {
-        for (Building b : productionChain.getBuildingList()) {
+        for (Building b : buildingList) {
             if (b instanceof Entrepot) {
                 return ((Entrepot) b);
             }

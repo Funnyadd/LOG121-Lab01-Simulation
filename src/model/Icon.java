@@ -7,9 +7,9 @@ import java.io.IOException;
 
 public class Icon {
 
+    private final BufferedImage image;
     private final String type;
     private final String path;
-    private final BufferedImage image;
 
     public Icon(String type, String path) {
         this.type = type;

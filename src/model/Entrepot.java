@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Entrepot extends Building {
 
+    private final List<Observer> listObservers = new LinkedList<>();
+
     private Strategy strategy;
     private EntrepotInput input;
     private boolean isFull;
-
-    private List<Observer> listObservers = new LinkedList<>();
 
     public Entrepot(Building b) {
         super(b.getType(), b.getIcon(), b.getOutput(), b.getProductionInterval(), b.getCoordinates(), b.getId());

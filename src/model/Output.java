@@ -5,8 +5,7 @@ import java.util.List;
 
 public class Output {
 
-    private String type;
-
+    private final String type;
     private final List<MachineComponent> machineComponents = new LinkedList<>();
 
     public Output() {

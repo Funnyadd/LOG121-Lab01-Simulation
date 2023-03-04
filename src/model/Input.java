@@ -2,7 +2,7 @@ package model;
 
 public class Input {
 
-    private MachineComponent component;
+    private final MachineComponent component;
 
     public Input(MachineComponent component) {
         this.component = component;
