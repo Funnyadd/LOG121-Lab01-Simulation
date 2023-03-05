@@ -49,6 +49,10 @@ public class PanneauControl extends JPanel {
             productionChain.getEntrepot().setStrategy(optionStrategie);
             productionChain.setSpeedMultiplier(speedOption);
             productionChain.setOptimisation(optimisationOption);
+
+            // Remmettre le bouton jouer/pause à jouer
+            playPauseButton.setText(PAUSE_TEXT);
+            productionChain.setIsOn(true);
         });
 
         resetButton.addActionListener((ActionEvent e) -> {
