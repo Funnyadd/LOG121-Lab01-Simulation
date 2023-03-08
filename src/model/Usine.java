@@ -35,7 +35,8 @@ public class Usine extends Building implements Observer {
     }
 
     @Override
-    public void turnOnOff() {
+    public boolean turnOnOff() {
         this.isTurnedOn = !this.isTurnedOn;
+        return !this.isTurnedOn;
     }
 }

@@ -71,8 +71,10 @@ public class Entrepot extends Building {
     }
 
     public void turnUsinesOnOff() {
+        boolean state = true;
         for (Observer obv : listObservers) {
-            obv.turnOnOff();
+            state = obv.turnOnOff();
         }
+        setFull(state);
     }
 }

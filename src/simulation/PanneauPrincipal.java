@@ -46,7 +46,7 @@ public class PanneauPrincipal extends JPanel {
 			}
 
 			for (Building b : productionChain.getBuildingList()) {
-				switch(b.getType()) {
+				switch (b.getType()) {
 					case "usine-matiere":
 						// Ajouter 1 au counter d'interval quand la composante est déssiné sur l'interface
 						b.incrementIntervalCounter();
@@ -67,7 +67,6 @@ public class PanneauPrincipal extends JPanel {
 
 						if (entrepot.getInput().getCapacity() >= entrepot.getInput().getMaxCapacity() && !entrepot.isFull()) {
 							entrepot.turnUsinesOnOff();
-							entrepot.setFull(true);
 						}
 
 						if (entrepot.getInput().getCapacity() < entrepot.getInput().getMaxCapacity()) {
@@ -88,7 +87,6 @@ public class PanneauPrincipal extends JPanel {
 
 							if (entrepot.isFull()) {
 								entrepot.turnUsinesOnOff();
-								entrepot.setFull(false);
 							}
 						}
 						break;
